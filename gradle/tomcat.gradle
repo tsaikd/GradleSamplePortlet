@@ -1,0 +1,35 @@
+/** define the following properties in gradle.properties
+tomcatHost
+tomcatPort
+tomcatUser
+tomcatPass
+ **/
+/** add to build.gradle
+buildscript {
+	repositories {
+		add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+			name = 'GitHub'
+			addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+		}
+	}
+	dependencies {
+		classpath 'bmuschko:gradle-cargo-plugin:0.3'
+	}
+}
+ **/
+
+apply plugin: 'cargo'
+
+cargo {
+	containerId = 'tomcat7x'
+	remote {
+		hostname = tomcatHost
+		port = Integer.parseInt(tomcatPort)
+		username = tomcatUser
+		password = tomcatPass
+	}
+}
+
+dependencies {
+	cargo 'org.codehaus.cargo:cargo-ant:1.1.1'
+}

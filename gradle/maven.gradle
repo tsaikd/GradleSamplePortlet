@@ -1,0 +1,33 @@
+/** define the following properties in gradle.properties
+mavenSnapshotUrl
+mavenReleaseUrl
+mavenDeployUser
+mavenDeployPass
+ **/
+
+apply plugin: 'maven'
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: version.contains('SNAPSHOT') ? mavenSnapshotUrl : mavenReleaseUrl) {
+				authentication(userName: mavenDeployUser, password: mavenDeployPass)
+			}
+		}
+	}
+}
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
