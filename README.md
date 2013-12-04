@@ -1,0 +1,4 @@
+GradleSamplePortlet
+===================
+
+gradle sample portlet
