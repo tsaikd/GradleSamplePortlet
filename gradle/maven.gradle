@@ -10,7 +10,10 @@ apply plugin: 'maven'
 uploadArchives {
 	repositories {
 		mavenDeployer {
-			repository(url: version.contains('SNAPSHOT') ? mavenSnapshotUrl : mavenReleaseUrl) {
+			repository(url: mavenReleaseUrl) {
+				authentication(userName: mavenDeployUser, password: mavenDeployPass)
+			}
+			snapshotRepository(url: mavenSnapshotUrl) {
 				authentication(userName: mavenDeployUser, password: mavenDeployPass)
 			}
 		}
@@ -28,6 +31,5 @@ task javadocJar(type: Jar, dependsOn:javadoc) {
 }
 
 artifacts {
-	archives sourcesJar
-	archives javadocJar
+	archives sourcesJar, javadocJar
 }

@@ -1,8 +1,8 @@
 apply plugin: 'java'
-apply from: 'gradle/eclipse-web.gradle'
+apply from: 'gradle/eclipse-war.gradle'
 
 group = 'org.tsaikd.java'
-version = '0.1-SNAPSHOT'
+version = '1.0' + (hasProperty('release') ? "" : "-SNAPSHOT")
 
 sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -11,16 +11,16 @@ repositories {
 	mavenCentral()
 }
 
+dependencies {
+	testCompile 'junit:junit:4.11'
+	providedCompile 'javax.portlet:portlet-api:2.0'
+}
+
 war {
 	if (version.contains('SNAPSHOT')) {
 		java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyyMMdd-HHmm")
-		version += '-' + dateFormat.format(Calendar.getInstance().getTime())
+		classifier = dateFormat.format(Calendar.getInstance().getTime())
 	}
-}
-
-dependencies {
-	testCompile 'junit:junit:+'
-	providedCompile 'javax.portlet:portlet-api:+'
 }
 
 test {
