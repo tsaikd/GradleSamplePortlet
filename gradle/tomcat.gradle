@@ -16,10 +16,18 @@ apply plugin: 'cargo'
 cargo {
 	containerId = 'tomcat7x'
 	remote {
-		hostname = tomcatHost
-		port = Integer.parseInt(tomcatPort)
-		username = tomcatUser
-		password = tomcatPass
+		if (hasProperty("tomcatHost")) {
+			hostname = tomcatHost
+		}
+		if (hasProperty("tomcatPort")) {
+			port = Integer.parseInt(tomcatPort)
+		}
+		if (hasProperty("tomcatUser")) {
+			username = tomcatUser
+		}
+		if (hasProperty("tomcatPass")) {
+			password = tomcatPass
+		}
 	}
 }
 

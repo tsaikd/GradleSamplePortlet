@@ -10,11 +10,15 @@ apply plugin: 'maven'
 uploadArchives {
 	repositories {
 		mavenDeployer {
-			repository(url: mavenReleaseUrl) {
-				authentication(userName: mavenDeployUser, password: mavenDeployPass)
+			if (hasProperty("mavenReleaseUrl")) {
+				repository(url: mavenReleaseUrl) {
+					authentication(userName: mavenDeployUser, password: mavenDeployPass)
+				}
 			}
-			snapshotRepository(url: mavenSnapshotUrl) {
-				authentication(userName: mavenDeployUser, password: mavenDeployPass)
+			if (hasProperty("mavenSnapshotUrl")) {
+				snapshotRepository(url: mavenSnapshotUrl) {
+					authentication(userName: mavenDeployUser, password: mavenDeployPass)
+				}
 			}
 		}
 	}
