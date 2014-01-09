@@ -16,18 +16,18 @@ apply plugin: 'cargo'
 cargo {
 	containerId = 'tomcat7x'
 	remote {
-		if (hasProperty("tomcatHost")) {
+		try {
 			hostname = tomcatHost
-		}
-		if (hasProperty("tomcatPort")) {
+		} catch (MissingPropertyExceptionmpe) {}
+		try {
 			port = Integer.parseInt(tomcatPort)
-		}
-		if (hasProperty("tomcatUser")) {
+		} catch (MissingPropertyExceptionmpe) {}
+		try {
 			username = tomcatUser
-		}
-		if (hasProperty("tomcatPass")) {
+		} catch (MissingPropertyExceptionmpe) {}
+		try {
 			password = tomcatPass
-		}
+		} catch (MissingPropertyExceptionmpe) {}
 	}
 }
 

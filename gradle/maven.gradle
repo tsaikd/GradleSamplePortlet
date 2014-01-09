@@ -10,16 +10,16 @@ apply plugin: 'maven'
 uploadArchives {
 	repositories {
 		mavenDeployer {
-			if (hasProperty("mavenReleaseUrl")) {
+			try {
 				repository(url: mavenReleaseUrl) {
 					authentication(userName: mavenDeployUser, password: mavenDeployPass)
 				}
-			}
-			if (hasProperty("mavenSnapshotUrl")) {
+			} catch (MissingPropertyExceptionmpe) {}
+			try {
 				snapshotRepository(url: mavenSnapshotUrl) {
 					authentication(userName: mavenDeployUser, password: mavenDeployPass)
 				}
-			}
+			} catch (MissingPropertyExceptionmpe) {}
 		}
 	}
 }
